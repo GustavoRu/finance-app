@@ -19,3 +19,4 @@ Route::apiResource('/dollars', DollarController::class);
 
 // auth
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
