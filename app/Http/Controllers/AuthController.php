@@ -16,7 +16,7 @@ class AuthController extends Controller
 
         //create user
         $user = User::create([
-            'name' => $data['name'], 
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
@@ -29,14 +29,14 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $data = $request->validated();
-
-        if(!Auth::attempt($data)){
+        if (!Auth::attempt($data)) {
             return response([
                 'errors' => ['El email o el password son incorrectos']
-            ],422);
+            ], 422);
         }
         //auth
         $user = Auth::user();
+
         return [
             'token' => $user->createToken('token')->plainTextToken,
             'user' => $user
@@ -44,6 +44,9 @@ class AuthController extends Controller
     }
     public function logout(Request $request)
     {
-        # code...
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
+
+        return ['user' => null];
     }
 }

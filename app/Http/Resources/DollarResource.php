@@ -20,6 +20,7 @@ class DollarResource extends JsonResource
             'icon' => $this->icon,
             'buyPrice' => $this->buy_price,
             'sellPrice' => $this->sell_price,
+            'description' => $this->description,
         ];
     }
 }
