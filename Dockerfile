@@ -1,6 +1,8 @@
 # Usa una imagen base con Nginx y PHP
 FROM richarvey/nginx-php-fpm:3.1.6
 
+EXPOSE 8080
+
 # Copia todos los archivos de tu proyecto al contenedor
 COPY . .
 
@@ -20,4 +22,5 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Comando para iniciar el contenedor
-CMD ["/start.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+
