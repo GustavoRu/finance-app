@@ -22,5 +22,5 @@ ENV LOG_CHANNEL stderr
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
 # Comando para iniciar el contenedor
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/start.sh"]
 
