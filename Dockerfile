@@ -1,26 +1,22 @@
-# Usa una imagen base con Nginx y PHP
-FROM richarvey/nginx-php-fpm:3.1.6
+FROM richarvey/nginx-php-fpm:latest
 
-EXPOSE 8080
+# Copia la aplicación Laravel
+COPY . /var/www/html
 
-# Copia todos los archivos de tu proyecto al contenedor
-COPY . .
+# Instalar dependencias PHP
+RUN apt-get update && apt-get install -y \
+    php8.3-fpm \
+    php8.3-mysql \
+    # otros paquetes necesarios
 
-# Configuración de la imagen
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Establece los permisos correctos
+RUN chown -R www-data:www-data /var/www/html
 
-# Configuración de Laravel
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
+# Configura Nginx
+COPY nginx-site.conf /etc/nginx/sites-available/default
 
-# Permitir que Composer se ejecute como root
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Configura PHP-FPM
+RUN service php8.3-fpm start
 
-# Comando para iniciar el contenedor
-CMD ["/start.sh"]
-
+# Expone los puertos
+EXPOSE 80
