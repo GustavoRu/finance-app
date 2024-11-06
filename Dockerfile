@@ -17,6 +17,6 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-CMD ["/scripts/00-laravel-deploy.sh"]
+CMD ["/start.sh"]
 
  
